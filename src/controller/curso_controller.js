@@ -1,5 +1,5 @@
 
-const CursoSchema = require("../model/curso.js");
+const CursoSchema = require("../model/cursos.js");
 const mongoose = require('mongoose')
 
 const crearCurso = async(req, res) =>{
@@ -68,7 +68,7 @@ const verCursos = async (req, res) =>{
         let cursos;
         cursos = await CursoSchema.find().select("_id name description duration organization imagen")
         
-        if(cursos.length==0){
+        if(cursos.length<1){
             return res
                 .status(200)
                 .json({
@@ -78,10 +78,10 @@ const verCursos = async (req, res) =>{
     
         res
             .status(200)
-            .json({cursos})
+            .json(cursos)
 
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             error: "Se produjo un error inesperado:" + error.message
         });        
     }
@@ -93,6 +93,12 @@ const actualizarCurso = async (req, res)=>{
         const { name, description, duration, organization } = req.body;
         const cursoEncontrado = await CursoSchema.findById({_id:id})
     
+        if(!name || !description || !duration || !organization || !id){
+            return res.status(400).json({
+                msg: "Se dejaron campos basios"
+            })
+        }
+
         if(!cursoEncontrado){
             return res
                 .status(400)
@@ -114,7 +120,7 @@ const actualizarCurso = async (req, res)=>{
             })
 
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             error: "Se produjo un error inesperado:" + error.message
         });  
     }
@@ -124,6 +130,13 @@ const eliminarCurso = async(req, res) => {
 
     try {
         const {id} = req.params
+
+        if (!id) {
+            return res.status(400).json({
+                msg: "Se dejaron campos basios",
+            });
+        }
+        
         const cursoEncontrado = await CursoSchema.findById({_id:id})
     
         if(!cursoEncontrado){
@@ -144,7 +157,7 @@ const eliminarCurso = async(req, res) => {
         
     } catch (error) {
         res
-            .status(404)
+            .status(500)
             .json({
                 error: "Se produjo un error inesperado:" + error.message,
             });  

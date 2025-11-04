@@ -9,7 +9,6 @@ const storage = new CloudinaryStorage({
         folder: "cloudinary_images",
         allowed_formats: ["jpg", "jpeg", "png", "webp"],
         transformation: [
-            { width: 300, height: 300, crop: "thumb", gravity: "face" },
             { quality: "auto" },
             { fetch_format: "auto" },
         ],
