@@ -41,10 +41,7 @@ const agregarProyecto = async(req, res) => {
 
         res
             .status(200)
-            .json({
-                msg: "Proyecto creado exitosamente",
-                datos: newProyecto
-            })
+            .json(newProyecto)
         
     } catch (error) {
         res

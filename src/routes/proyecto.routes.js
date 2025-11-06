@@ -1,5 +1,5 @@
 
-const {agregarProyecto, verProyectos, actualizarProyecto, eliminarProyecto} = require('../controller/proyecto_controller.js')
+const {agregarProyecto, verProyectos, actualizarProyecto, eliminarProyecto} = require('../controller/proyecto.controller.js')
 const express = require('express')
 const upload = require('../config/multer.js')
 const routes = express()

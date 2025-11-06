@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 
 const crearCurso = async(req, res) =>{
     try {
-        const {name, description, duration, organization} = req.body
-        if(!name || !description || !duration|| !organization ){
+        const {name, duration, organization} = req.body
+        if(!name || !duration|| !organization ){
             return res
                 .status(400)
                 .json({
@@ -41,7 +41,6 @@ const crearCurso = async(req, res) =>{
 
         const newCurso = new CursoSchema({
             name: name.trim(),
-            description: description.trim(),
             duration,
             organization: organization.trim(),
             imagen: req.file.path
@@ -51,14 +50,11 @@ const crearCurso = async(req, res) =>{
 
         res
             .status(200)
-            .json({
-                msg: "Curso creado exitosamente",
-                datos: newCurso,
-            });
+            .json(newCurso);
 
     } catch (error) {
         res.status(500).json({
-            rror: "Se produjo un error inesperado:" + error.message
+            msg: "Se produjo un error inesperado:" + error.message
         });
     }
 }
@@ -90,10 +86,10 @@ const verCursos = async (req, res) =>{
 const actualizarCurso = async (req, res)=>{
     try {
         const {id} = req.params
-        const { name, description, duration, organization } = req.body;
+        const { name, duration, organization } = req.body;
         const cursoEncontrado = await CursoSchema.findById({_id:id})
     
-        if(!name || !description || !duration || !organization || !id){
+        if(!name || !duration || !organization || !id){
             return res.status(400).json({
                 msg: "Se dejaron campos basios"
             })
@@ -108,7 +104,6 @@ const actualizarCurso = async (req, res)=>{
         }
     
         cursoEncontrado.name = name
-        cursoEncontrado.description = description
         cursoEncontrado.duration = duration
         cursoEncontrado.organization = organization
         await cursoEncontrado.save()

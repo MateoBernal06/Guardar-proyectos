@@ -6,10 +6,6 @@ const CursoSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
-            type: String,
-            require: true,
-        },
         duration: {
             type: Number,
             min: 0,

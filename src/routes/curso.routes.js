@@ -1,5 +1,5 @@
 
-const { crearCurso, verCursos, actualizarCurso, eliminarCurso } = require('../controller/curso_controller.js');
+const { crearCurso, verCursos, actualizarCurso, eliminarCurso } = require('../controller/curso.controller.js');
 const upload = require('../config/multer.js')
 const express = require('express')
 
