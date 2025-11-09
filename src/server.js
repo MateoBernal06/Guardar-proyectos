@@ -5,10 +5,12 @@ const proyectos = require('./routes/proyecto.routes.js')
 require('colors')
 const connection = require('./database.js')
 require("dotenv").config();
+const cors = require('cors')
 
 const app = express()
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(cors({origin : process.env.FRONTEND_URL}))
 connection()
 
 

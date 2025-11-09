@@ -3,10 +3,10 @@ const ProyectosSchema = require("../model/proyectos.js");
 const agregarProyecto = async(req, res) => {
 
     try {
-        const { name, description, github, link  } = req.body;
+        const { name, description, github, link, tecnologys  } = req.body;
         const compararName = await ProyectosSchema.findOne({name : name.trim()})
     
-        if(!name || !description || !github || !link){
+        if(!name || !description || !github){
             return res
                 .status(400)
                 .json({
@@ -22,17 +22,19 @@ const agregarProyecto = async(req, res) => {
                 })
         }
 
-        const imagen = req.files["imagen"] ? req.files["imagen"][0].path : null;
 
-        const tecnologys = req.files["tecnologys"]
-            ? req.files["tecnologys"].map((file) => file.path)
-            : [];
+        if (!req.file || !req.file.path) {
+            return res
+                .status(400)
+                .json({ msg: "La imagen es obligatoria" });
+        }
+
 
         const newProyecto = new ProyectosSchema({
-            name,
-            description,
-            imagen,
-            github,
+            name: name.trim(),
+            description: description.trim(),
+            imagen: req.file.path,
+            github: github.trim(),
             link,
             tecnologys
         });
@@ -55,7 +57,15 @@ const agregarProyecto = async(req, res) => {
 const verProyectos = async(req, res)=>{
     try {
         let proyectos;
-        proyectos = await ProyectosSchema.find().select("_id name description imagen github link tecnologys")
+        proyectos = await ProyectosSchema.find().select(`
+            _id 
+            name 
+            description 
+            imagen 
+            github 
+            link 
+            tecnologys`
+        )
     
         if(proyectos.length<1){
             return res
@@ -79,9 +89,9 @@ const verProyectos = async(req, res)=>{
 const actualizarProyecto = async(req, res)=>{
     try {
         const {id} = req.params
-        const { name, description, github, link } = req.body;
+        const { name, description, github, link, tecnologys } = req.body;
 
-        if(!id || !name || !description || !github || !link){
+        if(!id || !name || !description || !github || !link, tecnologys.length<1){
             return res.status(400).json({
                 msg: "Se dejaron campos basios",
             });
@@ -111,6 +121,7 @@ const actualizarProyecto = async(req, res)=>{
         actualizar.description = description
         actualizar.github = github
         actualizar.link = link
+        actualizar.tecnologys = tecnologys
         await actualizar.save()
         
         res.status(200).json({

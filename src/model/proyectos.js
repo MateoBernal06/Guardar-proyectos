@@ -20,7 +20,7 @@ const ProyectosSchema = new Schema(
         },
         link: {
             type: String,
-            required: true
+            default: ""
         },
         tecnologys: {
             type: [String],
