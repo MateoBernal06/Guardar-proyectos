@@ -9,6 +9,8 @@ const connection = require("./database.js");
 require("dotenv").config();
 const cors = require("cors");
 
+const PORT = process.env.PORT || 3000
+
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
@@ -32,6 +34,6 @@ app.use("/", (req, res, next) => {
     next();
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server on Port ${process.env.PORT}`.bgBlue);
+app.listen(PORT, () => {
+    console.log(`Server on Port ${PORT}`.bgBlue);
 });
