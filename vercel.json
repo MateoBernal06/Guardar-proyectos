@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.js"
+    }
+  ],
+  "env": {
+    "PORT": "@port",
+    "URL_MONGO_ATLAS": "@mongodb_url",
+    "FRONTEND_URL": "@frontend_url",
+    "CLOUDINARY_NAME": "@cloudinary_name",
+    "CLOUDINARY_KEY": "@cloudinary_key",
+    "CLOUDINARY_SECRET": "@cloudinary_secret",
+    "EMAIL_HOST": "@email_host",
+    "EMAIL_PORT": "@email_port",
+    "EMAIL_USER": "@email_user",
+    "EMAIL_PASS": "@email_pass"
+  }
+}

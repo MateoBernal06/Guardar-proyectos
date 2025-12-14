@@ -1,12 +1,14 @@
 {
   "name": "guardar-proyectos",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "api/index.js",
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "build": "echo 'Build completed'",
+    "vercel-build": "echo 'Vercel build completed'"
   },
   "keywords": [],
   "author": "",
